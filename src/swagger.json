@@ -1,0 +1,226 @@
+{
+    "openapi": "3.0.0",
+    "info":{
+        "title": "Desafio Solid Rocketseat Documentation",
+        "description": "This is a Desafio Solid Rocketseat",
+        "version": "1.0.0",
+        "contact":{
+            "email": "joaolucas55br@gmail.com"
+        }
+    },
+    "paths":{
+        "/users": {
+            "post": {
+                "tags": ["users"],
+                "summary": "Create a new User",
+                "description": "Create a new user",
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "name":{
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type":"string"
+                                    }
+                                },
+                                "example":{
+                                    "name": "Name example",
+                                    "email": "name@example.com"
+                                }
+                            }
+                        }
+                    },
+                    "required":true
+                },
+                "responses":{
+                    "201":{
+                        "description": "Created",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties":{
+                                        "id":{
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "admin":{
+                                            "type": "boolean"
+                                        },
+                                        "name":{
+                                            "type": "string"
+                                        },
+                                        "email":{
+                                            "type": "string"
+                                        },
+                                        "created_at":{
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at":{
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "User Already exists"
+                    }
+                }
+            },
+            "get":{
+                "tags": ["users"],
+                "summary": "List All Users",
+                "description": "List all users in app",
+                "parameters": [
+                    {
+                      "in": "header",
+                      "name": "user_id",
+                      "type": "string",
+                      "required": true,
+                      "description": "Numeric ID of the user to get."
+                    }
+                ],
+                "required":true,
+                "responses":{
+                    "200":{
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "type":"object",
+                                        "properties":{
+                                            "id":{
+                                                "type": "string",
+                                                "format":"uuid"
+                                            },
+                                            "admin":{
+                                                "type":"boolean"
+                                            },
+                                            "name":{
+                                                "type": "string"
+                                            },
+                                            "email":{
+                                                "type": "string"
+                                            },
+                                            "created_at":{
+                                                "type":"string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at":{
+                                                "type":"string",
+                                                "format":"date-time"
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "User not found or User has no permition"
+                    }
+                }
+            }
+        },
+        "/users/{user_id}":{
+            "get":{
+                "tags": ["users"],
+                "summary": "Show user profile",
+                "description": "Show user profile by user id",
+                "parameters":[
+                    {
+                        "in": "path",
+                        "name": "user_id",
+                        "schema":{
+                            "type":"string",
+                            "format":"uuid"
+                        },
+                        "required":true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "User Profile",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "type":"object",
+                                        "properties":{
+                                            "id":{
+                                                "type": "string",
+                                                "format":"uuid"
+                                            },
+                                            "admin":{
+                                                "type":"boolean"
+                                            },
+                                            "name":{
+                                                "type": "string"
+                                            },
+                                            "email":{
+                                                "type": "string"
+                                            },
+                                            "created_at":{
+                                                "type":"string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at":{
+                                                "type":"string",
+                                                "format":"date-time"
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    },
+                    "404":{
+                        "description": "User Not found"
+                    }
+                }
+
+            }
+        },
+        "/users/{user_id}/admin":{
+            "patch":{
+                "tags": ["users"],
+                "summary": "Make user admin",
+                "description": "Make user admin by user id",
+                "parameters":[
+                    {
+                        "in": "path",
+                        "name": "user_id",
+                        "schema":{
+                            "type":"string",
+                            "format":"uuid"
+                        },
+                        "required":true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Ok"
+                    },
+                    "404":{
+                        "description":"User Not found"
+                    }
+                }
+            }
+        }
+
+    }
+}
